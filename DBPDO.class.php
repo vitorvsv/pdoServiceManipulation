@@ -193,13 +193,11 @@ class DBPDO
     {
         if (!empty($table))
         {
-            $query = "SELECT * 
-                          FROM information_schema.columns 
-                      WHERE table_schema = '{$this->dbName}' 
-                        AND table_name = '{$table}' 
-                        AND COLUMN_NAME = '{$column}';";
-            $data = $this->connection->query($query);
-            return $this->rankColumn($data->fetch(PDO::FETCH_ASSOC)['DATA_TYPE']);
+            $where[] = "table_schema = '{$this->dbName}'";
+            $where[] = "table_name = '{$table}'";
+            $where[] = "column_name = '{$column}'";
+            $type = $this->getConfigurationDB("data_type","columns",$where,false);
+            return $this->rankColumn($type['data_type']);
         }
     }
 
@@ -214,10 +212,12 @@ class DBPDO
     {
         switch (strtolower($type))
         {
-            case 'varchar' :
-                $return = PDO::PARAM_STR;
-            case 'int' :
+            case "int" :
                 $return = PDO::PARAM_INT;
+                break;
+            case "varchar" :
+                $return = PDO::PARAM_STR;
+                break;
             default :
                 $return = null;
         }
