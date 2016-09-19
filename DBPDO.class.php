@@ -49,7 +49,7 @@ class DBPDO
      * @param $args -> Argumentos que devem ser avaliados
      * @return bool -> true|false
      */
-    public function paramsIsNotNull($args)
+    private function paramsIsNotNull($args)
     {
         if ($args)
         {
@@ -139,7 +139,7 @@ class DBPDO
      * @param $assoc -> Passar true quando desejar um array associoativo
      * @return array|bool
      */
-    public function mountPatternPrepare($data,$assoc = false)
+    private function mountPatternPrepare($data,$assoc = false)
     {
         if ($this->paramsIsNotNull(func_get_args()) AND is_object($data))
         {
@@ -167,7 +167,7 @@ class DBPDO
      * @param $data
      * @param PDOStatement $connectionPrepare
      */
-    public function replacePatternBind($data,PDOStatement $connectionPrepare,$table)
+    private function replacePatternBind($data,PDOStatement $connectionPrepare,$table)
     {
         if ($this->paramsIsNotNull(func_get_args()))
         {
@@ -189,7 +189,7 @@ class DBPDO
      * @param $column
      * @return mixed
      */
-    public function getTypeColumn($table,$column)
+    private function getTypeColumn($table,$column)
     {
         if (!empty($table))
         {
@@ -210,7 +210,7 @@ class DBPDO
      * @param $type
      * @return int|null
      */
-    public function rankColumn($type)
+    private function rankColumn($type)
     {
         switch (strtolower($type))
         {
@@ -236,7 +236,7 @@ class DBPDO
      * @param null $all -> Apenas um array ou vários arrays com informacoes dentro
      * @return array
      */
-    public function getConfigurationDB($select,$from,$where = "1=1",$all = true)
+    private function getConfigurationDB($select,$from,$where = "1=1",$all = true)
     {
         if ($this->paramsIsNotNull(array($select,$from)))
         {
@@ -263,5 +263,4 @@ class DBPDO
 
         return false;
     }
-
 }
